@@ -3,88 +3,97 @@ from time import sleep
 
 class motor:
     def __init__(self) -> None:
-        ena = 14
-        in1 = 15
-        in2 = 18
+        self.ena = 14
+        self.in1 = 15
+        self.in2 = 18
 
-        enb = 22
-        in3 = 27
-        in4 = 17
+        self.enb = 22
+        self.in3 = 27
+        self.in4 = 17
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(in1,GPIO.OUT)
-        GPIO.setup(in2,GPIO.OUT)
-        GPIO.setup(ena,GPIO.OUT)
+        GPIO.setup(self.in1,GPIO.OUT)
+        GPIO.setup(self.in2,GPIO.OUT)
+        GPIO.setup(self.ena,GPIO.OUT)
 
-        GPIO.setup(in3,GPIO.OUT)
-        GPIO.setup(in4,GPIO.OUT)
-        GPIO.setup(enb,GPIO.OUT)
+        GPIO.setup(self.in3,GPIO.OUT)
+        GPIO.setup(self.in4,GPIO.OUT)
+        GPIO.setup(self.enb,GPIO.OUT)
 
-        GPIO.output(in1,GPIO.LOW)
-        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(self.in1,GPIO.LOW)
+        GPIO.output(self.in2,GPIO.LOW)
 
-        GPIO.output(in3,GPIO.LOW)
-        GPIO.output(in4,GPIO.LOW)
+        GPIO.output(self.in3,GPIO.LOW)
+        GPIO.output(self.in4,GPIO.LOW)
 
-        p=GPIO.PWM(ena,1000)
-        b=GPIO.PWM(enb,1000)
+        self.p=GPIO.PWM(self.ena,1000)
+        self.b=GPIO.PWM(self.enb,1000)
 
-        p.start(25)
-        b.start(25)
+        self.p.start(25)
+        self.b.start(25)
         pass
     
     def forward(self, speed):
-        GPIO.output(ena,GPIO.HIGH)
-        GPIO.output(in1,GPIO.LOW)
-        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(self.ena,GPIO.HIGH)
+        GPIO.output(self.in1,GPIO.LOW)
+        GPIO.output(self.in2,GPIO.HIGH)
 
-        GPIO.output(enb,GPIO.HIGH)
-        GPIO.output(in3,GPIO.LOW)
-        GPIO.output(in4,GPIO.HIGH)
+        GPIO.output(self.enb,GPIO.HIGH)
+        GPIO.output(self.in3,GPIO.LOW)
+        GPIO.output(self.in4,GPIO.HIGH)
 
-        p.ChangeDutyCycle(speed)
-        b.ChangeDutyCycle(speed)
+        self.p.ChangeDutyCycle(speed)
+        self.b.ChangeDutyCycle(speed)
         pass
 
     def backward(self, speed):
-        GPIO.output(ena,GPIO.HIGH)
-        GPIO.output(in1,GPIO.HIGH)
-        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(self.ena,GPIO.HIGH)
+        GPIO.output(self.in1,GPIO.HIGH)
+        GPIO.output(self.in2,GPIO.LOW)
 
-        GPIO.output(enb,GPIO.HIGH)
-        GPIO.output(in3,GPIO.HIGH)
-        GPIO.output(in4,GPIO.LOW)
+        GPIO.output(self.enb,GPIO.HIGH)
+        GPIO.output(self.in3,GPIO.HIGH)
+        GPIO.output(self.in4,GPIO.LOW)
 
-        p.ChangeDutyCycle(speed)
-        b.ChangeDutyCycle(speed)
+        self.p.ChangeDutyCycle(speed)
+        self.b.ChangeDutyCycle(speed)
         pass
 
     def turn_left(self, speed):
-        GPIO.output(ena,GPIO.HIGH)
-        GPIO.output(in1,GPIO.LOW)
-        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(self.ena,GPIO.HIGH)
+        GPIO.output(self.in1,GPIO.LOW)
+        GPIO.output(self.in2,GPIO.HIGH)
 
-        GPIO.output(enb,GPIO.HIGH)
-        GPIO.output(in3,GPIO.LOW)
-        GPIO.output(in4,GPIO.HIGH)
+        GPIO.output(self.enb,GPIO.HIGH)
+        GPIO.output(self.in3,GPIO.LOW)
+        GPIO.output(self.in4,GPIO.HIGH)
 
-        p.ChangeDutyCycle(speed / 2)
-        b.ChangeDutyCycle(speed)
+        self.p.ChangeDutyCycle(speed / 3)
+        self.b.ChangeDutyCycle(speed)
         pass
     
     def turn_right(self, speed):
-        GPIO.output(ena,GPIO.HIGH)
-        GPIO.output(in1,GPIO.LOW)
-        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(self.ena,GPIO.HIGH)
+        GPIO.output(self.in1,GPIO.LOW)
+        GPIO.output(self.in2,GPIO.HIGH)
 
-        GPIO.output(enb,GPIO.HIGH)
-        GPIO.output(in3,GPIO.LOW)
-        GPIO.output(in4,GPIO.HIGH)
+        GPIO.output(self.enb,GPIO.HIGH)
+        GPIO.output(self.in3,GPIO.LOW)
+        GPIO.output(self.in4,GPIO.HIGH)
 
-        p.ChangeDutyCycle(speed)
-        b.ChangeDutyCycle(speed / 2)
+        self.p.ChangeDutyCycle(speed)
+        self.b.ChangeDutyCycle(speed / 3)
         pass
 
-if __name__ == "__main__":
+    def tear_down(self):
+        GPIO.cleanup()
+
+if __name__ == '__main__':
     drive_train = motor()
-    motor.forward(75)
+    # All functions have been verified
+    # drive_train.forward(75)
+    # drive_train.backward(75)
+    # drive_train.turn_left(75)
+    # drive_train.turn_right(75)
+    sleep(1)
+    drive_train.tear_down()
