@@ -2,8 +2,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 class motor:
-
-    def __init__(self):
+    def __init__(self) -> None:
         ena = 14
         in1 = 15
         in2 = 18
@@ -85,3 +84,7 @@ class motor:
         p.ChangeDutyCycle(speed)
         b.ChangeDutyCycle(speed / 2)
         pass
+
+if __name__ == "__main__":
+    drive_train = motor()
+    motor.forward(75)
