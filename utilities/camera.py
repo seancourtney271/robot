@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class camera:
-    def __init__(self) -> None:
+    def __init__(self):
         self.camera = PiCamera()
         self.dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/images/'
 
@@ -26,7 +26,7 @@ class camera:
         pass
 
 if __name__ == '__main__':
-    robot_camera = camera
+    robot_camera = camera()
     robot_camera.take_picture()
     robot_camera.tear_down()
     pass
